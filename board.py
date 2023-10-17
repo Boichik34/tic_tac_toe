@@ -1,38 +1,43 @@
 import pygame
-
+import game
+import player
 
 class Board:
 
-    def create_window(self):
+
+    def create_window():
+        Game = game.Game()
         pygame.init()
-        clock = pygame.time.Clock()
-        backfone = pygame.image.load('pictures/peakpx (2).jpg')
-        screen = pygame.display.set_mode((700, 700))  # моё окно. его размер
-        pygame.display.set_caption("tic tac toe")  # устанавливаем название
-        pygame.display.set_icon(pygame.image.load("pictures/icon.png"))  # устанавливаем икону(подгрузка изоброжения)
-        myfont = pygame.font.Font('fonts/YoungSerif-Regular.ttf', 50)  # добавляем шрифт
-        text = myfont.render('one player', True, ('Red'))
-        text_2 = myfont.render('two player', True, ('Red'))
-        text_3 = myfont.render('wwwww', True, ('Red'))
-        text_shadow = text.get_rect(topleft=(200, 20))
-        text_shadow_2 = text_2.get_rect(topleft=(200, 600))
 
-        nevixod = True
-        while nevixod:
-            screen.blit(backfone, (0, 0))  # создаем в окне фигуру "square"
-            screen.blit(text, text_shadow)
-            screen.blit(text_2, text_shadow_2)
-            mouse = pygame.mouse.get_pos()
-            if text_shadow.collidepoint(mouse) and pygame.mouse.get_pressed()[0]:
-                screen.blit(text_3, (200, 300))
+        # icon_1 = player_1.player_icon
+        # icon_2 = player_2.player_icon
+        square = pygame.Surface((220, 220))
+        square.fill('White')
+        square_shadow_1 = square.get_rect(topleft=(15, 15))
+        square_shadow_2 = square.get_rect(topleft=(245, 15))
+        square_shadow_3 = square.get_rect(topleft=(475, 15))
+        square_shadow_4 = square.get_rect(topleft=(15, 245))
+        square_shadow_5 = square.get_rect(topleft=(245, 245))
+        square_shadow_6 = square.get_rect(topleft=(475, 245))
+        square_shadow_7 = square.get_rect(topleft=(15, 475))
+        square_shadow_8 = square.get_rect(topleft=(245, 475))
+        square_shadow_9 = square.get_rect(topleft=(475, 475))
 
-            pygame.display.update()  # обновляем окно
-            for event in pygame.event.get():  # проверяет на событие
-                if event.type == pygame.QUIT:  # если событие = выход
-                    pygame.quit()  # выход
-                    nevixod = False
+        while True:
+            Game.screen.fill('Black')
+            Game.screen.blit(square, (15, 15))
+            Game.screen.blit(square, (245, 15))
+            Game.screen.blit(square, (475, 15))
+            Game.screen.blit(square, (15, 245))
+            Game.screen.blit(square, (245, 245))
+            Game.screen.blit(square, (475, 245))
+            Game.screen.blit(square, (15, 475))
+            Game.screen.blit(square, (245, 475))
+            Game.screen.blit(square, (475, 475))
+            # Game.screen.blit(icon_1, (56, 56))
+            # Game.screen.blit(icon_2, (286, 286))
+            pygame.display.update()
 
 
 
-a = Board
-a.create_window(a)
+
