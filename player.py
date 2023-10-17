@@ -2,9 +2,6 @@
 
 
 class Player:
-    def __init__(self, name):
+    def __init__(self, name, player_icon=None):
         self.name = name
-        icon = None
-
-
-    def chose_icon(self):
+        self.player_icon = player_icon
