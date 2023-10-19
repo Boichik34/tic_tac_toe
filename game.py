@@ -56,9 +56,9 @@ class Game:
     def draw_fone(self):
         pygame.init()
         self.screen.blit(self.backfone, (0, 0))
-        myfont = pygame.font.Font('fonts/YoungSerif-Regular.ttf', 65)
+        myfont = pygame.font.Font('fonts/YoungSerif-Regular.ttf', 64)
         text = myfont.render('let\'s go to', True, 'Red')
-        text2 = myfont.render('"Rock Scissors Paper "', True, 'Red')
+        text2 = myfont.render('"Rock Scissors Paper"', True, 'Red')
         text3 = myfont.render('who\'s first', True, 'Red')
         text4 = myfont.render('choose', True, 'Red')
 
@@ -228,12 +228,21 @@ class Game:
             clock.tick(10)
 
     def start_game(self, player_1, queue, player_2=None):
+        
         board.Board.create_window(Board)
         clock = pygame.time.Clock()
         icon_lst = []
         x_lst = []
         y_lst = []
-        shadow_lst = []
+        shadow_lst = [Board.square_shadow_1,
+                      Board.square_shadow_2,
+                      Board.square_shadow_3,
+                      Board.square_shadow_4,
+                      Board.square_shadow_5,
+                      Board.square_shadow_6,
+                      Board.square_shadow_7,
+                      Board.square_shadow_8,
+                      Board.square_shadow_9,]
         line_1_lst = []
         line_2_lst = []
         line_3_lst = []
@@ -242,9 +251,10 @@ class Game:
         column_3_lst = []
         dig_1_lst = []
         dig_2_lst = []
+
         r = 9
         while r != 0 :
-
+            random_shadow = None
             if queue:
                 if r % 2 == 1:
                     player_icon = player_1.player_icon
@@ -254,9 +264,11 @@ class Game:
                     if not player_2:
                         player_icon = self.icon_n2
                         self.player_isgoing('player_2')
+                        random_shadow = random.choice(shadow_lst)
                     else:
                         self.player_isgoing('player_2')
                         player_icon = player_2.player_icon
+
             else:
                 if r % 2 == 1:
                     if player_2:
@@ -265,6 +277,7 @@ class Game:
                     else:
                         self.player_isgoing('player_2')
                         player_icon = self.icon_n2
+                        random_shadow = random.choice(shadow_lst)
                 else:
                     self.player_isgoing('player_1')
                     player_icon = player_1.player_icon
@@ -273,102 +286,189 @@ class Game:
             mouse = pygame.mouse.get_pos()
             for event in pygame.event.get():
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                    if Board.square_shadow_1.collidepoint(mouse) and Board.square_shadow_1 not in shadow_lst:
+                    if Board.square_shadow_1.collidepoint(mouse) and Board.square_shadow_1 in shadow_lst:
                         x_lst.append(Board.square_shadow_1.x)
                         y_lst.append(Board.square_shadow_1.y)
                         icon_lst.append(player_icon)
                         Board.draw_icon(icon_lst, x_lst, y_lst)
-                        shadow_lst.append(Board.square_shadow_1)
+                        shadow_lst.remove(Board.square_shadow_1)
                         line_1_lst.append(player_icon)
                         column_1_lst.append(player_icon)
                         dig_1_lst.append(player_icon)
                         r -= 1
-                    if Board.square_shadow_2.collidepoint(mouse) and Board.square_shadow_2 not in shadow_lst:
+                    if Board.square_shadow_2.collidepoint(mouse) and Board.square_shadow_2 in shadow_lst:
                         x_lst.append(Board.square_shadow_2.x)
                         y_lst.append(Board.square_shadow_2.y)
                         icon_lst.append(player_icon)
                         Board.draw_icon(icon_lst, x_lst, y_lst)
-                        shadow_lst.append(Board.square_shadow_2)
+                        shadow_lst.remove(Board.square_shadow_2)
                         line_1_lst.append(player_icon)
                         column_2_lst.append(player_icon)
                         r -= 1
-                    if Board.square_shadow_3.collidepoint(mouse) and Board.square_shadow_3 not in shadow_lst:
+                    if Board.square_shadow_3.collidepoint(mouse) and Board.square_shadow_3 in shadow_lst:
                         x_lst.append(Board.square_shadow_3.x)
                         y_lst.append(Board.square_shadow_3.y)
                         icon_lst.append(player_icon)
                         Board.draw_icon(icon_lst, x_lst, y_lst)
-                        shadow_lst.append(Board.square_shadow_3)
+                        shadow_lst.remove(Board.square_shadow_3)
                         line_1_lst.append(player_icon)
                         column_3_lst.append(player_icon)
                         dig_2_lst.append(player_icon)
                         r -= 1
-                    if Board.square_shadow_4.collidepoint(mouse) and Board.square_shadow_4 not in shadow_lst:
+                    if Board.square_shadow_4.collidepoint(mouse) and Board.square_shadow_4 in shadow_lst:
                         x_lst.append(Board.square_shadow_4.x)
                         y_lst.append(Board.square_shadow_4.y)
                         icon_lst.append(player_icon)
                         Board.draw_icon(icon_lst, x_lst, y_lst)
-                        shadow_lst.append(Board.square_shadow_4)
+                        shadow_lst.remove(Board.square_shadow_4)
                         line_2_lst.append(player_icon)
                         column_1_lst.append(player_icon)
                         r -= 1
-                    if Board.square_shadow_5.collidepoint(mouse) and Board.square_shadow_5 not in shadow_lst:
+                    if Board.square_shadow_5.collidepoint(mouse) and Board.square_shadow_5 in shadow_lst:
                         x_lst.append(Board.square_shadow_5.x)
                         y_lst.append(Board.square_shadow_5.y)
                         icon_lst.append(player_icon)
                         Board.draw_icon(icon_lst, x_lst, y_lst)
-                        shadow_lst.append(Board.square_shadow_5)
+                        shadow_lst.remove(Board.square_shadow_5)
                         line_2_lst.append(player_icon)
                         column_2_lst.append(player_icon)
                         dig_1_lst.append(player_icon)
                         dig_2_lst.append(player_icon)
                         r -= 1
-                    if Board.square_shadow_6.collidepoint(mouse) and Board.square_shadow_6 not in shadow_lst:
+                    if Board.square_shadow_6.collidepoint(mouse) and Board.square_shadow_6 in shadow_lst:
                         x_lst.append(Board.square_shadow_6.x)
                         y_lst.append(Board.square_shadow_6.y)
                         icon_lst.append(player_icon)
                         Board.draw_icon(icon_lst, x_lst, y_lst)
-                        shadow_lst.append(Board.square_shadow_6)
+                        shadow_lst.remove(Board.square_shadow_6)
                         line_2_lst.append(player_icon)
                         column_3_lst.append(player_icon)
                         r -= 1
-                    if Board.square_shadow_7.collidepoint(mouse) and Board.square_shadow_7 not in shadow_lst:
+                    if Board.square_shadow_7.collidepoint(mouse) and Board.square_shadow_7 in shadow_lst:
                         x_lst.append(Board.square_shadow_7.x)
                         y_lst.append(Board.square_shadow_7.y)
                         icon_lst.append(player_icon)
                         Board.draw_icon(icon_lst, x_lst, y_lst)
-                        shadow_lst.append(Board.square_shadow_7)
+                        shadow_lst.remove(Board.square_shadow_7)
                         line_3_lst.append(player_icon)
                         column_1_lst.append(player_icon)
                         dig_2_lst.append(player_icon)
                         r -= 1
-                    if Board.square_shadow_8.collidepoint(mouse) and Board.square_shadow_8 not in shadow_lst:
+                    if Board.square_shadow_8.collidepoint(mouse) and Board.square_shadow_8 in shadow_lst:
                         x_lst.append(Board.square_shadow_8.x)
                         y_lst.append(Board.square_shadow_8.y)
                         icon_lst.append(player_icon)
                         Board.draw_icon(icon_lst, x_lst, y_lst)
-                        shadow_lst.append(Board.square_shadow_8)
+                        shadow_lst.remove(Board.square_shadow_8)
                         line_3_lst.append(player_icon)
                         column_2_lst.append(player_icon)
                         r -= 1
-                    if Board.square_shadow_9.collidepoint(mouse) and Board.square_shadow_9 not in shadow_lst:
+                    if Board.square_shadow_9.collidepoint(mouse) and Board.square_shadow_9 in shadow_lst:
                         x_lst.append(Board.square_shadow_9.x)
                         y_lst.append(Board.square_shadow_9.y)
                         icon_lst.append(player_icon)
                         Board.draw_icon(icon_lst, x_lst, y_lst)
-                        shadow_lst.append(Board.square_shadow_9)
+                        shadow_lst.remove(Board.square_shadow_9)
                         line_3_lst.append(player_icon)
                         column_3_lst.append(player_icon)
                         dig_1_lst.append(player_icon)
                         r -= 1
-                        print(r)
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     r = 0
+            if random_shadow == Board.square_shadow_1 and Board.square_shadow_1 in shadow_lst:
+                x_lst.append(Board.square_shadow_1.x)
+                y_lst.append(Board.square_shadow_1.y)
+                icon_lst.append(player_icon)
+                Board.draw_icon(icon_lst, x_lst, y_lst)
+                shadow_lst.remove(Board.square_shadow_1)
+                line_1_lst.append(player_icon)
+                column_1_lst.append(player_icon)
+                dig_1_lst.append(player_icon)
+                r -= 1
+            if random_shadow == Board.square_shadow_2 and Board.square_shadow_2 in shadow_lst:
+                x_lst.append(Board.square_shadow_2.x)
+                y_lst.append(Board.square_shadow_2.y)
+                icon_lst.append(player_icon)
+                Board.draw_icon(icon_lst, x_lst, y_lst)
+                shadow_lst.remove(Board.square_shadow_2)
+                line_1_lst.append(player_icon)
+                column_2_lst.append(player_icon)
+                r -= 1
+            if random_shadow == Board.square_shadow_3 and Board.square_shadow_3 in shadow_lst:
+                x_lst.append(Board.square_shadow_3.x)
+                y_lst.append(Board.square_shadow_3.y)
+                icon_lst.append(player_icon)
+                Board.draw_icon(icon_lst, x_lst, y_lst)
+                shadow_lst.remove(Board.square_shadow_3)
+                line_1_lst.append(player_icon)
+                column_3_lst.append(player_icon)
+                dig_2_lst.append(player_icon)
+                r -= 1
+            if random_shadow == Board.square_shadow_4 and Board.square_shadow_4 in shadow_lst:
+                x_lst.append(Board.square_shadow_4.x)
+                y_lst.append(Board.square_shadow_4.y)
+                icon_lst.append(player_icon)
+                Board.draw_icon(icon_lst, x_lst, y_lst)
+                shadow_lst.remove(Board.square_shadow_4)
+                line_2_lst.append(player_icon)
+                column_1_lst.append(player_icon)
+                r -= 1
+            if random_shadow == Board.square_shadow_5 and Board.square_shadow_5 in shadow_lst:
+                x_lst.append(Board.square_shadow_5.x)
+                y_lst.append(Board.square_shadow_5.y)
+                icon_lst.append(player_icon)
+                Board.draw_icon(icon_lst, x_lst, y_lst)
+                shadow_lst.remove(Board.square_shadow_5)
+                line_2_lst.append(player_icon)
+                column_2_lst.append(player_icon)
+                dig_1_lst.append(player_icon)
+                dig_2_lst.append(player_icon)
+                r -= 1
+            if random_shadow == Board.square_shadow_6 and Board.square_shadow_6 in shadow_lst:
+                x_lst.append(Board.square_shadow_6.x)
+                y_lst.append(Board.square_shadow_6.y)
+                icon_lst.append(player_icon)
+                Board.draw_icon(icon_lst, x_lst, y_lst)
+                shadow_lst.remove(Board.square_shadow_6)
+                line_2_lst.append(player_icon)
+                column_3_lst.append(player_icon)
+                r -= 1
+            if random_shadow == Board.square_shadow_7 and Board.square_shadow_7 in shadow_lst:
+                x_lst.append(Board.square_shadow_7.x)
+                y_lst.append(Board.square_shadow_7.y)
+                icon_lst.append(player_icon)
+                Board.draw_icon(icon_lst, x_lst, y_lst)
+                shadow_lst.remove(Board.square_shadow_7)
+                line_3_lst.append(player_icon)
+                column_1_lst.append(player_icon)
+                dig_2_lst.append(player_icon)
+                r -= 1
+            if random_shadow == Board.square_shadow_8 and Board.square_shadow_8 in shadow_lst:
+                x_lst.append(Board.square_shadow_8.x)
+                y_lst.append(Board.square_shadow_8.y)
+                icon_lst.append(player_icon)
+                Board.draw_icon(icon_lst, x_lst, y_lst)
+                shadow_lst.remove(Board.square_shadow_8)
+                line_3_lst.append(player_icon)
+                column_2_lst.append(player_icon)
+                r -= 1
+            if random_shadow == Board.square_shadow_9 and Board.square_shadow_9 in shadow_lst:
+                x_lst.append(Board.square_shadow_9.x)
+                y_lst.append(Board.square_shadow_9.y)
+                icon_lst.append(player_icon)
+                Board.draw_icon(icon_lst, x_lst, y_lst)
+                shadow_lst.remove(Board.square_shadow_9)
+                line_3_lst.append(player_icon)
+                column_3_lst.append(player_icon)
+                dig_1_lst.append(player_icon)
+                r -= 1
             if r < 5:
                 lst_lst = [line_1_lst, line_2_lst, line_3_lst, column_1_lst, column_2_lst, column_3_lst, dig_1_lst, dig_2_lst]
                 if self.check_list(lst_lst):
-                    print('win')
-                    self.win()
+                    self.result('you win')
+            if r == 0:
+                self.result('draw')
             pygame.display.update()
             clock.tick(10)
 
@@ -489,10 +589,30 @@ class Game:
             else:
                 return False
 
-    def win(self):
+    def result(self, result):
         pygame.init()
-        myfont = pygame.font.Font('fonts/YoungSerif-Regular.ttf', 160)
-        text = myfont.render('you win', True, 'Red')
-        self.screen.blit(text, (50, 200))
+        myfont = pygame.font.Font('fonts/YoungSerif-Regular.ttf', 130)
+        text = myfont.render(result, True, 'Red')
+        self.screen.blit(text, (90, 50))
+        text2 = myfont.render('try again?', True, 'Red')
+        text_yes = myfont.render('yes', True, 'Blue')
+        text_no = myfont.render('no', True, 'Blue')
+        shadow_text_yes = text_yes.get_rect(topleft=(50, 470))
+        shadow_text_no = text_no.get_rect(topleft=(500, 470))
+        self.screen.blit(text2, (15, 250))
+        self.screen.blit(text_yes, shadow_text_yes)
+        self.screen.blit(text_no, shadow_text_no)
         pygame.display.update()
-        pygame.time.delay(3000)
+        r = True
+        while r:
+            mouse = pygame.mouse.get_pos()
+            for event in pygame.event.get():
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    if shadow_text_yes.collidepoint(mouse):
+                        self.create_game()
+                    if shadow_text_no.collidepoint(mouse):
+                        pygame.quit()
+                        r = False
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    r = False
