@@ -1,11 +1,7 @@
-import pygame
 import game
 
 
-
 def main():
-    global CLOCK
-    global SCREEN
 
     GAME = game.Game()
     while True:

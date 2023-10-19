@@ -2,8 +2,9 @@ import pygame
 import player
 import board
 import random
-
 Board = board.Board()
+
+
 class Game:
     def __init__(self, backfone=None,
                  screen=None,
@@ -71,7 +72,6 @@ class Game:
         self.screen.blit(self.icon_p, self.p_shadow)
 
     def create_game(self):
-
         pygame.init()
         clock = pygame.time.Clock()
         pygame.display.set_caption("tic tac toe")  # устанавливаем название
@@ -84,37 +84,29 @@ class Game:
         self.screen.blit(self.backfone, (0, 0))  # создаем в окне фигуру "square"
         self.screen.blit(text, text_shadow)
         self.screen.blit(text_2, text_shadow_2)
-
         PLAYER_1 = player.Player(player, 'Mario')
         PLAYER_2 = player.Player(player, 'Luigi')
         PLAYER_1.player_icon = None
         PLAYER_2.player_icon = None
-
-
         nevixod = True
-
         while nevixod:
             mouse = pygame.mouse.get_pos()
-
-
             for event in pygame.event.get():
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and text_shadow.collidepoint(mouse):
                     PLAYER_1.player_icon = self.chose_icon()
                     queue = queue = self.queueu()
                     self.start_game(PLAYER_1, queue)
-
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and text_shadow_2.collidepoint(mouse):
                     PLAYER_1.player_icon = self.chose_icon()
                     PLAYER_2.player_icon = self.chose_icon_2()
                     queue = self.queueu_2()
                     self.start_game(PLAYER_1, queue, PLAYER_2)
-
-                # проверяет на событие
-                if event.type == pygame.QUIT:  # если событие = выход
-                    pygame.quit()  # выход
+                if event.type == pygame.QUIT:
+                    pygame.quit()
                     nevixod = False
-            pygame.display.update()  # обновляем окно
+            pygame.display.update()
             clock.tick(10)
+
     def chose_icon(self):
         pygame.init()
         clock = pygame.time.Clock()
@@ -130,10 +122,8 @@ class Game:
         icon_7_shadow = self.icon_c1.get_rect(topleft=(514, 140))
         icon_8_shadow = self.icon_c1.get_rect(topleft=(514, 340))
         icon_9_shadow = self.icon_c1.get_rect(topleft=(514, 540))
-
         r = True
         while r:
-
             self.screen.blit(backefone, (0, 0))
             self.screen.blit(text_icon, (50, 5))
             self.screen.blit(self.icon_c1, icon_1_shadow)
@@ -170,12 +160,12 @@ class Game:
                     pygame.quit()
                     r = False
             clock.tick(10)
+
     def chose_icon_2(self):
         pygame.init()
         clock = pygame.time.Clock()
         myfont = pygame.font.Font('fonts/YoungSerif-Regular.ttf', 50)
         text_icon = myfont.render('Player 2 choose an icon', True, 'Red')
-
         backefone = pygame.image.load('pictures/peakpx (4).jpg')
         icon_1_shadow = self.icon_n1.get_rect(topleft=(58, 140))
         icon_2_shadow = self.icon_n2.get_rect(topleft=(58, 340))
@@ -186,10 +176,8 @@ class Game:
         icon_7_shadow = self.icon_n7.get_rect(topleft=(514, 140))
         icon_8_shadow = self.icon_n8.get_rect(topleft=(514, 340))
         icon_9_shadow = self.icon_n9.get_rect(topleft=(514, 540))
-
         r = True
         while r:
-
             self.screen.blit(backefone, (0, 0))
             self.screen.blit(text_icon, (50, 5))
             self.screen.blit(self.icon_n1, icon_1_shadow)
@@ -228,7 +216,6 @@ class Game:
             clock.tick(10)
 
     def start_game(self, player_1, queue, player_2=None):
-        
         board.Board.create_window(Board)
         clock = pygame.time.Clock()
         icon_lst = []
@@ -251,7 +238,6 @@ class Game:
         column_3_lst = []
         dig_1_lst = []
         dig_2_lst = []
-
         r = 9
         while r != 0 :
             random_shadow = None
@@ -259,7 +245,6 @@ class Game:
                 if r % 2 == 1:
                     player_icon = player_1.player_icon
                     self.player_isgoing('player_1')
-
                 else:
                     if not player_2:
                         player_icon = self.icon_n2
@@ -268,7 +253,6 @@ class Game:
                     else:
                         self.player_isgoing('player_2')
                         player_icon = player_2.player_icon
-
             else:
                 if r % 2 == 1:
                     if player_2:
@@ -281,8 +265,6 @@ class Game:
                 else:
                     self.player_isgoing('player_1')
                     player_icon = player_1.player_icon
-
-
             mouse = pygame.mouse.get_pos()
             for event in pygame.event.get():
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
@@ -466,9 +448,9 @@ class Game:
             if r < 5:
                 lst_lst = [line_1_lst, line_2_lst, line_3_lst, column_1_lst, column_2_lst, column_3_lst, dig_1_lst, dig_2_lst]
                 if self.check_list(lst_lst):
-                    self.result('you win')
+                    self.result('you win', player_1, queue, player_2)
             if r == 0:
-                self.result('draw')
+                self.result('draw', player_1, queue, player_2)
             pygame.display.update()
             clock.tick(10)
 
@@ -496,8 +478,8 @@ class Game:
                         player_choice = self.icon_p
                         icon_lst.remove(self.icon_p)
                 if event.type == pygame.QUIT:
-                    pygame.quit()
                     r = False
+                    pygame.quit()
             if player_choice:
                 self.screen.blit(self.backfone, (0, 0))
                 self.screen.blit(text, (70, 250))
@@ -577,10 +559,9 @@ class Game:
             if len(el) == 3:
                 if self.check_lst2(el):
                     return True
-
         return False
-    def check_lst2(self, lst):
 
+    def check_lst2(self, lst):
         for i in range(len(lst)):
             if lst[0] != lst[1]:
                 return False
@@ -589,7 +570,7 @@ class Game:
             else:
                 return False
 
-    def result(self, result):
+    def result(self, result, player_1, queue, player_2):
         pygame.init()
         myfont = pygame.font.Font('fonts/YoungSerif-Regular.ttf', 130)
         text = myfont.render(result, True, 'Red')
@@ -609,10 +590,17 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     if shadow_text_yes.collidepoint(mouse):
-                        self.create_game()
-                    if shadow_text_no.collidepoint(mouse):
-                        pygame.quit()
                         r = False
+                        if queue:
+                            queue = False
+                            self.start_game(player_1, queue, player_2)
+                        else:
+                            queue = True
+                            self.start_game(player_1, queue, player_2)
+                    if shadow_text_no.collidepoint(mouse):
+                        r = False
+                        pygame.quit()
                 if event.type == pygame.QUIT:
-                    pygame.quit()
                     r = False
+                    pygame.quit()
+

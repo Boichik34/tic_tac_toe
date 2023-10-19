@@ -1,7 +1,5 @@
 import pygame
 import game
-import player
-
 
 
 class Board:
@@ -27,8 +25,6 @@ class Board:
         self.square_shadow_8 = self.square.get_rect(topleft=(240, 470))
         self.square_shadow_9 = self.square.get_rect(topleft=(470, 470))
 
-
-
     def create_window(self):
         Game = game.Game()
         pygame.init()
@@ -47,17 +43,9 @@ class Board:
         # Game.screen.blit(icon_2, (286, 286))
         pygame.time.delay(20)
         pygame.display.update()
-        #while True:
-        # icon_1 = player_1.player_icon
-        # icon_2 = player_2.player_icon
-
 
     def draw_icon(self, lst, lst2, lst3):
         Game = game.Game()
         self.create_window()
         for el,x, y in zip(lst, lst2, lst3):
             Game.screen.blit(el, (x + 41, y + 41))
-
-
-
-
